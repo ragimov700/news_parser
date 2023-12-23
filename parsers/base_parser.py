@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Optional, Dict
 
 import requests
 from bs4 import BeautifulSoup
@@ -10,16 +10,16 @@ class BaseParser(ABC):
 
     def fetch_soup(self, url: str = START_URL) -> Optional[BeautifulSoup]:
         if not self.START_URL:
-            raise ValueError("START_URL не определен в парсере")
+            raise ValueError("START_URL не определен в парсере.")
 
         try:
             response = requests.get(self.START_URL)
             response.raise_for_status()
-            return BeautifulSoup(response.text, 'html.parser')
+            return BeautifulSoup(response.text, 'lxml')
         except requests.RequestException as e:
             print(f'Ошибка при запросе к {url}: {e}.')
             return None
 
     @abstractmethod
-    def parse_news(self, soup: BeautifulSoup):
+    def parse_news(self, soup: BeautifulSoup) -> Optional[Dict[str, str]]:
         pass

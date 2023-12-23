@@ -1,3 +1,5 @@
+from typing import Optional, Dict
+
 from bs4 import BeautifulSoup
 
 from .base_parser import BaseParser
@@ -6,16 +8,28 @@ from .base_parser import BaseParser
 class SiteAParser(BaseParser):
     START_URL = 'https://astrakhan.su/'
 
-    def parse_news(self, soup: BeautifulSoup):
-        title = soup.find('div', class_='news-block third-style').a.get(
-            'title')
-        link = soup.find('div', class_='news-block third-style').a.get('href')
+    def parse_news(self, soup: BeautifulSoup) -> Optional[Dict[str, str]]:
+        if not soup:
+            return None
+        # Получаем заголовок и ссылку новости:
+        news_block = soup.find('div', 'news-block third-style')
+        if not news_block:
+            return None
+        title_tag = news_block.find('a')
+        if not title_tag:
+            return None
+        title = title_tag.get('title')
+        link = title_tag.get('href')
+        # Получаем ссылку на изображение:
         soup = self.fetch_soup(link)
-        img_url = soup.find('img', class_='wp-post-image')['src']
-
+        image_tag = soup.find('img', 'wp-post-image')
+        if not image_tag:
+            return None
+        image_url = image_tag.get('src')
+        # Упаковываем данные в словарь:
         items = {
             'title': title,
             'link': link,
-            'image_url': img_url,
+            'image_url': image_url,
         }
         return items
