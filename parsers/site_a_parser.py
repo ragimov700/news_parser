@@ -1,4 +1,5 @@
 from typing import Optional, Dict
+from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 
@@ -25,11 +26,12 @@ class SiteAParser(BaseParser):
         image_tag = soup.find('img', 'wp-post-image')
         if not image_tag:
             return None
+
         image_url = image_tag.get('src')
         # Упаковываем данные в словарь:
         items = {
             'title': title,
-            'link': link,
-            'image_url': image_url,
+            'link': urljoin(self.START_URL, link),
+            'image_url': urljoin(self.START_URL, image_url),
         }
         return items

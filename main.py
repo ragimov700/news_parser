@@ -10,12 +10,13 @@ def run_parser(parser: BaseParser) -> ...:
     if news_items:
         # Обрабатываем изображение
         image_url = news_items.get('image_url')
-        image = ImageProcessor.download_image(image_url)
-        overlay_image = ImageProcessor.image_overlay(image)
-        # overlay_image.show()
-        image_with_text = ImageProcessor.add_text_to_image(overlay_image, news_items.get('title'))
-        image_with_text.show()
-    # return parser
+        if image_url:
+            image = ImageProcessor.download_image(image_url)
+            overlay_image = ImageProcessor.image_overlay(image)
+            image_with_text = ImageProcessor.add_text_to_image(
+                overlay_image, news_items.get('title')
+            )
+    return parser
 
 
 def main():
