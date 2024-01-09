@@ -7,9 +7,26 @@ from .base_parser import BaseParser
 
 
 class SiteAParser(BaseParser):
+    """
+    Парсер для сайта новостей Астрахань.Ру.
+
+    Этот класс наследуется от BaseParser и предоставляет
+    функционал для парсинга новостей с сайта.
+
+    :var START_URL: Начальный URL сайта для парсинга.
+    """
     START_URL = 'https://astrakhan.su/'
 
     def parse_news(self, soup: BeautifulSoup) -> Optional[Dict[str, str]]:
+        """
+        Парсит новость из HTML-контента, полученного с помощью BeautifulSoup.
+
+        Извлекает заголовок, ссылку и ссылку на изображение новости.
+
+        :param soup: Объект BeautifulSoup, содержащий HTML-контент страницы.
+        :return: Словарь с данными новости, включая заголовок, ссылку и ссылку
+        на изображение. Возвращает None, если не удаётся извлечь данные.
+        """
         if not soup:
             return None
         # Получаем заголовок и ссылку новости:
