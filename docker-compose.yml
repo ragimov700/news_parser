@@ -2,6 +2,6 @@ version: '3.8'
 
 services:
   parser:
-    build: .
+    image: ragimov700/parser30
     env_file:
       - .env
