@@ -1,3 +1,5 @@
+import time
+
 from database.dao import NewsDatabase
 from image_processing.processor import ImageProcessor
 from parsers.base_parser import BaseParser
@@ -25,19 +27,29 @@ def run_parser(parser: BaseParser) -> None:
             image_with_text = ImageProcessor.add_text_to_image(
                 overlay_image, news_items.get('title')
             )
-            # # Отправляем пост в телеграм
+            # Отправляем пост в телеграм
             TelegramBot.send_post(image_with_text, news_items)
 
 
-def main():
-    db.remove_old_news()
-    site_a_parser = SiteAParser()
-    site_b_parser = SiteBParser()
-    site_с_parser = SiteСParser()
+def main(interval: int = 5) -> None:
+    error_cache = None
+    while True:
+        try:
+            site_a_parser = SiteAParser()
+            site_b_parser = SiteBParser()
+            site_с_parser = SiteСParser()
 
-    run_parser(site_a_parser)
-    run_parser(site_b_parser)
-    run_parser(site_с_parser)
+            run_parser(site_a_parser)
+            run_parser(site_b_parser)
+            run_parser(site_с_parser)
+        except Exception as error:
+            message = f'Сбой в работе скрипта: {error}'
+            if error_cache != message:
+                TelegramBot.send_message(message)
+                error_cache = message
+        finally:
+            db.remove_old_news()
+            time.sleep(interval * 60)
 
 
 if __name__ == '__main__':

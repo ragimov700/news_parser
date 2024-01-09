@@ -2,11 +2,8 @@ import io
 import os
 from typing import Dict, Optional
 
-from dotenv import load_dotenv
 from PIL import Image
 from telegram import Bot
-
-load_dotenv()
 
 
 class TelegramBot:
