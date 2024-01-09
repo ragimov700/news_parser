@@ -2,6 +2,8 @@ from database.dao import NewsDatabase
 from image_processing.processor import ImageProcessor
 from parsers.base_parser import BaseParser
 from parsers.site_a_parser import SiteAParser
+from parsers.site_b_parser import SiteBParser
+from parsers.site_c_parser import SiteСParser
 from telegram_bot.bot import TelegramBot
 
 
@@ -30,8 +32,12 @@ def run_parser(parser: BaseParser) -> None:
 def main():
     db.remove_old_news()
     site_a_parser = SiteAParser()
+    site_b_parser = SiteBParser()
+    site_с_parser = SiteСParser()
 
     run_parser(site_a_parser)
+    run_parser(site_b_parser)
+    run_parser(site_с_parser)
 
 
 if __name__ == '__main__':

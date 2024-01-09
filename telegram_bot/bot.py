@@ -1,9 +1,9 @@
 import io
 import os
-from typing import Optional, Dict
+from typing import Dict, Optional
 
-from PIL import Image
 from dotenv import load_dotenv
+from PIL import Image
 from telegram import Bot
 
 load_dotenv()

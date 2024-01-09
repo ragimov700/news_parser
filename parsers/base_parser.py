@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional, Dict
+from typing import Dict, Optional
 
 import requests
 from bs4 import BeautifulSoup
