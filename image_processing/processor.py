@@ -22,6 +22,7 @@ class ImageProcessor:
 
     @staticmethod
     def image_overlay(image: Image) -> Image:
+        """Наложение рамки на изображение."""
         overlay = Image.open('image_processing/templates/overlay.PNG')
         width, height = image.size
         size = min(width, height)
@@ -35,7 +36,7 @@ class ImageProcessor:
 
     @staticmethod
     def add_text_to_image(image: Image, text: str, max_len: int = 25) -> Image:
-        # Обработка текста перед наложением:
+        """Форматирование и наложение текста на изображение."""
         words = text.upper().split()
         lines = []
         current_line = []
@@ -47,7 +48,7 @@ class ImageProcessor:
                 current_line.append(word)
         lines.append(' '.join(current_line))
         wrapped_text = '\n'.join(lines)
-        # Наложение текста на изображение:
+
         draw = ImageDraw.Draw(image)
         font = ImageFont.truetype(
             'image_processing/fonts/Montserrat-Bold.ttf', size=70

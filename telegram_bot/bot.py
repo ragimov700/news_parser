@@ -16,7 +16,7 @@ class TelegramBot:
 
     @classmethod
     def send_message(cls, message):
-        """Отправляем пост в телеграм"""
+        """Отправляем сообщение в телеграм."""
         cls.bot.send_message(chat_id=cls.chat_id, text=message)
 
     @classmethod
